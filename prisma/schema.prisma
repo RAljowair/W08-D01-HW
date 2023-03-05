@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model movie {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  genre      Genre
+  rating     Int
+  duration   Int
+  created_at DateTime @default(now())
+}
+
+model book {
+  id      String @id @default(uuid())
+  name    String @unique
+  genre   String
+  lend loan[]
+}
+
+model loan {
+  id      String    @id @default(uuid())
+  user_id String
+  book_id String
+  user user @relation(fields: [user_id], references: [id])
+  book book @relation(fields: [book_id], references: [id])
+}
+
+model user {
+  id          String    @id @default(uuid())
+  username    String    @unique
+  password    String
+  email       String    @unique
+  role        user_role @default(user)
+  joning_year String 
+  age         Int
+  lend loan[]
+}
+
+enum Genre {
+  action
+  comedy
+  drama
+}
+
+enum user_role {
+  admin
+  user
+}
