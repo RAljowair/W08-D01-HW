@@ -1,8 +1,7 @@
 import { prisma } from "../config/db";
 import { Response, Request } from "express";
-import { user_role } from "@prisma/client";
 
-// function to get all movies
+// get all books
 export const findAllBooks = async (req: Request, res: Response) => {
   try {
     const books = await prisma.book.findMany();
@@ -12,6 +11,7 @@ export const findAllBooks = async (req: Request, res: Response) => {
   }
 };
 
+// find all lend books
 export const findAllLoans = async (req: Request, res: Response) => {
   try {
     const loans = await prisma.loan.findMany();
@@ -21,7 +21,7 @@ export const findAllLoans = async (req: Request, res: Response) => {
   }
 };
 
-// function to add new movie
+// add new book
 export const addBook = async (req: Request, res: Response) => {
   const name = req.body.name;
   const genre = req.body.genre;
@@ -39,6 +39,7 @@ export const addBook = async (req: Request, res: Response) => {
   }
 };
 
+// add loan relation
 export const addLoan = async (req: Request, res: Response) => {
   const user_id = req.body.user_id;
   const book_id = req.body.book_id;
@@ -70,3 +71,5 @@ export const addLoan = async (req: Request, res: Response) => {
     res.json(error);
   }
 };
+
+
